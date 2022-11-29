@@ -1,0 +1,5 @@
+<div class="backdrop" (click)="dismiss.emit()" *ngIf="this.backdropDismiss"></div>
+<div class="backdrop"  *ngIf="!this.backdropDismiss"></div>
+<div class="modal-content">
+  <ng-template #dynamic></ng-template>
+</div>

@@ -1,0 +1,34 @@
+{
+  "name": "ngx-open-modal",
+  "version": "0.0.1",
+  "description": "A simple modal system.",
+  "author": "Vinicius Ithalo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ViniciusIth/ngx-open-modal.git"
+  },
+  "homepage": "https://github.com/ViniciusIth/ngx-open-modal",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "modal"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/animations": "^14.2.0",
+    "@angular/common": "^14.2.0",
+    "@angular/compiler": "^14.2.0",
+    "@angular/core": "^14.2.0",
+    "ngx-animates": "^14.0.0",
+    "rxjs": "^7.5.7",
+    "tslib": "^2.3.0"
+  }
+}
