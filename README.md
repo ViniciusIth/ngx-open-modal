@@ -28,10 +28,6 @@ import { OpenModal, ModalData } from 'ngx-open-modal';
 export class ExampleComponent implements OpenModal {
 
   dismiss = new EventEmitter<ModalData>;
-  
-  cancel() {
-    this.dismiss.emit({})
-  }
 }
 ```
 
