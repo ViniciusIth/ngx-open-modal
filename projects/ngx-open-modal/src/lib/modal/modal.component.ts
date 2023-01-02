@@ -1,7 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { transition, trigger, useAnimation } from '@angular/animations';
-import { fadeIn, fadeOut } from 'ngx-animates';
-import { Component, ViewChild, ViewContainerRef, EventEmitter, Output, AfterViewInit, ComponentRef, HostBinding } from '@angular/core';
+import {
+  animate,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
+  Component,
+  ViewChild,
+  ViewContainerRef,
+  EventEmitter,
+  Output,
+  AfterViewInit,
+  ComponentRef,
+  HostBinding,
+} from '@angular/core';
 import { first, lastValueFrom } from 'rxjs';
 import { OpenModal, ModalData } from './modal.service';
 
@@ -13,61 +26,63 @@ import { OpenModal, ModalData } from './modal.service';
   styleUrls: ['./modal.component.scss'],
   animations: [
     trigger('state', [
-      transition(':enter', useAnimation(fadeIn, { params: { timing: .1 } })),
-      transition(':leave', useAnimation(fadeOut, { params: { timing: .1 } }))
-    ])
-  ]
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(100, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(100, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class ModalComponent implements AfterViewInit {
-
   @HostBinding('@state')
-
   @Output()
   dismiss = new EventEmitter<ModalData>();
-
   loaded = new EventEmitter<void>();
 
-  backdropDismiss?= true
-
+  inputData?: { [key: string]: any };
+  backdropDismiss? = true;
 
   @ViewChild('dynamic', { read: ViewContainerRef })
   modalHost!: ViewContainerRef;
 
   ngAfterViewInit(): void {
     if (this.modalHost) {
-      this.loaded.emit()
+      this.loaded.emit();
     }
   }
 
   /**
-  * Load the inputed component when it's ready
-  * @param component - The component to be loaded in the modal
-  * @return The loaded component reference
-  */
+   * Load the inputed component when it's ready
+   * @param component - The component to be loaded in the modal
+   * @return The loaded component reference
+   */
   async LoadComponentReady(component: any): Promise<ComponentRef<unknown>> {
-    console.log(this.backdropDismiss);
+    await lastValueFrom(this.loaded.pipe(first()));
+    const generated = this.modalHost.createComponent<OpenModal>(component);
 
-    await lastValueFrom(this.loaded.pipe(first()))
-    const generated = this.modalHost.createComponent<OpenModal>(component)
+    if (this.inputData) {
+      generated.instance.input = this.inputData;
+    }
 
-    generated.instance.dismiss.subscribe(
-      data => {
-        this.dismiss.emit(data)
-      }
-    )
+    generated.instance.dismiss.subscribe((data) => {
+      this.dismiss.emit(data);
+    });
 
-    return generated
+    return generated;
   }
 
   /**
-  * Deletes the component after the set delay
-  * @param delay - The time in miliseconds
-  * @return The loaded component reference
-  */
+   * Deletes the component after the set delay
+   * @param delay - The time in miliseconds
+   * @return The loaded component reference
+   */
   async timeout(delay: number) {
     setTimeout(() => {
-      this.dismiss.emit()
+      this.dismiss.emit();
     }, delay);
   }
 }
-
