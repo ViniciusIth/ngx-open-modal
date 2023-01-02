@@ -22,12 +22,14 @@
     "test": "ng test"
   },
   "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
   "peerDependencies": {
     "@angular/animations": "^14.2.0",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
-    "rxjs": "^7.5.7",
-    "tslib": "^2.3.0"
+    "rxjs": "^7.5.7"
   }
 }

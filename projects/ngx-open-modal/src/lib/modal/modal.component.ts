@@ -21,7 +21,7 @@ import { OpenModal, ModalData } from './modal.service';
 @Component({
   standalone: true,
   imports: [CommonModule],
-  selector: 'app-modal',
+  selector: 'nom-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   animations: [
